@@ -6,4 +6,6 @@ gemspec
 group :test do
   gem 'rails', '4.0.2'
   gem 'sqlite3'
+  gem 'factory_girl'
+  gem 'faker'
 end

@@ -1,5 +1,5 @@
 require "undo/version"
 
 module Undo
-  # Your code goes here...
+  require "undo/model"
 end
