@@ -8,5 +8,6 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module RailsApp
   class Application < Rails::Application
+    I18n.enforce_available_locales = false
   end
 end
