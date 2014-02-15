@@ -1,7 +1,7 @@
 require "spec_helper_lite"
 
 describe Undo do
-  subject { Undo }
+  subject { described_class }
 
   describe "#wrap" do
     let(:object) { double :object, change: true }
