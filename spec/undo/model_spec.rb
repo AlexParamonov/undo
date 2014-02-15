@@ -21,6 +21,15 @@ describe Undo::Model do
         expect(SecureRandom).to receive(:uuid) { "123" }
         expect(model.uuid).to eq "123"
       end
+
+      it "passes object to custom uuid gerenator" do
+        uuid_generator = double :uuid_generator
+        expect(uuid_generator).to receive(:call).with(object)
+
+        model = subject.new object, uuid_generator: uuid_generator
+        model.uuid
+      end
+
     end
 
   end

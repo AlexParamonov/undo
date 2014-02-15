@@ -19,7 +19,7 @@ module Undo
     attr_reader :object
 
     def generate_uuid
-      config.uuid_generator.call
+      config.uuid_generator.call object
     end
 
     def store
