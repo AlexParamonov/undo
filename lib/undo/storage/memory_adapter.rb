@@ -1,6 +1,9 @@
 module Undo
   module Storage
     class MemoryAdapter
+      def initialize(options = {})
+      end
+
       def put(uuid, object)
         storage[uuid] = object
       end
@@ -10,6 +13,8 @@ module Undo
       end
 
       private
+      attr_writer :storage
+
       def storage
         @storage ||= {}
       end

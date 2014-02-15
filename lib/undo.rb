@@ -4,8 +4,9 @@ require "undo/config"
 module Undo
   require "undo/model"
 
-  def self.config
-    yield(Undo::Config) if block_given?
-    Undo::Config
+  def self.config(&block)
+    @config ||= Undo::Config.new
+    yield(@config) if block_given?
+    @config
   end
 end

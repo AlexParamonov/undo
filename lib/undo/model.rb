@@ -1,11 +1,12 @@
 module Undo
   class Model < SimpleDelegator
-    def self.restore(uuid)
-      config.storage.fetch uuid
+    def self.restore(uuid, options = {})
+      config.with(options).storage.fetch uuid
     end
 
-    def initialize(object)
+    def initialize(object, options = {})
       @object = object
+      @config = config.with options
       super object
     end
 
@@ -30,11 +31,11 @@ module Undo
     end
 
     def config
-      self.class.config
+      @config ||= self.class.config
     end
 
     def self.config
-      Undo::Config
+      Undo.config
     end
   end
 end
