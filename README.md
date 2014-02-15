@@ -3,6 +3,7 @@ Undo
 [![Build Status](https://travis-ci.org/AlexParamonov/undo.png?branch=master)](http://travis-ci.org/AlexParamonov/undo)
 [![Gemnasium Build Status](https://gemnasium.com/AlexParamonov/undo.png)](http://gemnasium.com/AlexParamonov/undo)
 [![Coverage Status](https://coveralls.io/repos/AlexParamonov/undo/badge.png?branch=master)](https://coveralls.io/r/AlexParamonov/undo?branch=master)
+[![Gem Version](https://badge.fury.io/rb/undo.png)](http://badge.fury.io/rb/undo)
 
 Undo last operation on object.  
 Undo gem allows to use custom adapters for storage (Redis,
