@@ -9,4 +9,12 @@ module Undo
     yield(@config) if block_given?
     @config
   end
+
+  def self.wrap(object, *args)
+    Model.new object, *args
+  end
+
+  def self.restore(uuid, options = {})
+    config.with(options).storage.fetch uuid
+  end
 end
