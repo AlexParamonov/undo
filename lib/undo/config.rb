@@ -10,14 +10,12 @@ module Undo
       require "securerandom"
       ->(object) { SecureRandom.uuid }
     }
+    attribute :serializer, Object, default: ->(config, _) { Undo::Serializer::Null.new }
+
     attribute :storage, Object, default: ->(config, _) {
-      require "undo/storage/memory_adapter"
-      Undo::Storage::MemoryAdapter.new
-    }
-    attribute :serializer, Object, default: ->(config, _) {
-      require "undo/serializer/simple"
-      Undo::Serializer::Simple.new
-    }
+      require "undo/storage/memory"
+      Undo::Storage::Memory.new serializer: config.serializer
+    }, lazy: true
 
     def with(attribute_updates = {}, &block)
       return self if attribute_updates.empty?

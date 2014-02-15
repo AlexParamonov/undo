@@ -32,5 +32,17 @@ describe Undo::Model do
 
     end
 
+    describe "stores object data" do
+      specify "when called mutator method" do
+        storage = double :storage
+        allow(object).to receive(:change)
+        expect(storage).to receive(:put)
+
+        model = subject.new object,
+                            storage: storage,
+                            mutator_methods: [:change]
+        model.change
+      end
+    end
   end
 end
