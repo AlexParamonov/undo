@@ -11,6 +11,15 @@ describe Undo::Model do
     end
   end
 
+  it "is a decorator" do
+    object = [:a, :b]
+    decorator = subject.new object
+    expect(object).to receive(:some_method)
+
+    decorator.some_method
+    expect(object.class).to eq Array
+  end
+
   it "restores object" do
     undoable_model = subject.new object
     undoable_model.change
