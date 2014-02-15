@@ -13,7 +13,7 @@ describe Undo::Serializer::Simple do
 
   it "deserializes from json" do
     serialized_object = '{"hello":"world"}'
-    result = serializer.load_from_json serialized_object
+    result = serializer.from_json serialized_object
     expect(result).to eq "hello" => "world"
   end
 end

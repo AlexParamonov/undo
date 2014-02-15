@@ -1,6 +1,6 @@
 Undo
 ==========
-[![Build Status](https://travis-ci.org/AlexParamonov/undo.png?branch=master)](http://travis-ci.org/AlexParamonov/undo)
+[![Build Status](https://travis-ci.org/AlexParamonov/undo.png?branch=master)](https://travis-ci.org/AlexParamonov/undo)
 [![Gemnasium Build Status](https://gemnasium.com/AlexParamonov/undo.png)](http://gemnasium.com/AlexParamonov/undo)
 [![Coverage Status](https://coveralls.io/repos/AlexParamonov/undo/badge.png?branch=master)](https://coveralls.io/r/AlexParamonov/undo?branch=master)
 [![Gem Version](https://badge.fury.io/rb/undo.png)](http://badge.fury.io/rb/undo)
@@ -109,16 +109,16 @@ Storage adapter may use serializer this way:
 
 ``` ruby
 json = serializer.to_json object # in put method
-return serializer.load_from_json json # in fetch method
+return serializer.from_json json # in fetch method
 
 xml = serializer.to_xml object
-object = serializer.load_from_xml xml
+object = serializer.from_xml xml
 ```
 
 Usage of serializer is optional, some storages does not need them.  
 Serializer has the responsibility to write object to persistence
-(load_from\_\* methods) This seems a good candinate to extraction to own
-class (Deserializer or Loader) but due to to\_\* and load_from\_\*
+(from\_\* methods) This seems a good candinate to extraction to own
+class (Deserializer or Loader) but due to to\_\* and from\_\*
 method are tightly coupled with data format it is in one class now.
 Let me know using the Github feedback (create an issue) if you have
 any idea on this topic.

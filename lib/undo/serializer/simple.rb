@@ -7,7 +7,7 @@ module Undo
         object.to_json
       end
 
-      def load_from_json(json)
+      def from_json(json)
         JSON.parse json
       end
 
@@ -15,7 +15,7 @@ module Undo
         raise NotImplementedError
       end
 
-      def load_from_xml(xml)
+      def from_xml(xml)
         raise NotImplementedError
       end
     end
