@@ -4,10 +4,13 @@ require "undo/config"
 module Undo
   require "undo/model"
 
-  def self.config(&block)
+  def self.configure(&block)
+    yield(config) if block_given?
+    config
+  end
+
+  def self.config
     @config ||= Undo::Config.new
-    yield(@config) if block_given?
-    @config
   end
 
   def self.wrap(object, *args)

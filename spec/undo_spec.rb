@@ -7,7 +7,7 @@ describe Undo do
     let(:object) { double :object, change: true }
 
     before do
-      subject.config do |config|
+      subject.configure do |config|
         config.mutator_methods = [:change]
       end
     end
