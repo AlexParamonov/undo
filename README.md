@@ -86,22 +86,42 @@ end
 
 ### Configuration options
 `storage` option responsible for putting and fetching object state to or from some storage.  
-Implement `put(uuid, object)` and `fetch(uuid)` methods. See Storage::Memory for example.  
+Implement `put(uuid, object)` and `fetch(uuid)` methods.  
+Currently available serializers:
+* `gem "undo-storage-memory"` simple runtime storage (Hash)
+* `gem "undo-storage-redis"` designed to be used with `gem "redis"` from v0.1
+
 See also [documentation](http://github.com/AlexParamonov/undo)
-on project repository for currently available storage adapters.  
-If provided storage cant handle objects (most of the storage works with own formats as json for example),
-pass `serializer` to it:
+on project repository for full list of currently available storage adapters.  
+To convert objects to data that can be processed by storage adapters and backward, use `serializers`:
 
 ``` ruby
 Undo.configure do |config|
-  config.storage = AnotherStorage.new(serializer: config.serializer)
+  config.storage = Undo::Storage::Redis.new(serializer: CustomSerializer.new)
 end
 ```
 
-By default it is pass though `Serializer::Null`. It do nothing and
-returns whatever passed to it.  
+or define global serializer:
+
+``` ruby
+Undo.configure do |config|
+  config.serializer = CustomSerializer.new
+end
+```
+
+And it will be passed to default storage adapters or can be directly used:
+
+``` ruby
+Undo.configure do |config|
+  config.serializer = CustomSerializer.new
+  config.storage = Undo::Storage::Redis.new(serializer: config.serializer)
+end
+```
+
+
 Currently available serializers:
-* `Serializer::Simple` converts basic objects (Array, Hash) to/from json
+* `gem "undo-serializer-null"` pass though serializer. It do nothing and returns whatever passed to it. Usually used internally by default in storage adapters
+* `Undo::Serializer::Simple` serializer class converts basic objects (Array, Hash) to/from json
 
 ``` ruby
 Undo.configure do |config|
@@ -122,7 +142,8 @@ serializer.from_json json # in fetch method
 xml = serializer.to_xml object
 serializer.from_xml xml
 ```
-See `Storage::Memory` for example.  
+So `to_json(object)` and `from_json(json)` methods (or any other `to_*` or `from_*` methods that required by storage adapter) should be implemented
+
 
 `uuid_generator` option allows to setup custom uuid generator.
 
