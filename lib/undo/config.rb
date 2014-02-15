@@ -1,15 +1,23 @@
 require "virtus"
-require "undo/storage/memory_adapter"
 
 module Undo
   class Config
     include Virtus.model
 
-    attribute :storage, Object, default: ->(config, _) { Undo::Storage::MemoryAdapter.new }
     attribute :mutator_methods, Array[Symbol], default: [:update, :delete, :destroy]
-    attribute :serializer, Object, default: nil
-    attribute :uuid_generator, Proc, default: -> (config, _) { ->(object) { SecureRandom.uuid } }
 
+    attribute :uuid_generator, Proc, default: -> (config, _) {
+      require "securerandom"
+      ->(object) { SecureRandom.uuid }
+    }
+    attribute :storage, Object, default: ->(config, _) {
+      require "undo/storage/memory_adapter"
+      Undo::Storage::MemoryAdapter.new
+    }
+    attribute :serializer, Object, default: ->(config, _) {
+      require "undo/serializer/simple"
+      Undo::Serializer::Simple.new
+    }
 
     def with(attribute_updates = {}, &block)
       return self if attribute_updates.empty?
