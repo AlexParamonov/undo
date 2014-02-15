@@ -7,6 +7,7 @@ module Undo
 
     attribute :storage, Object, default: ->(config, _) { Undo::Storage::MemoryAdapter.new }
     attribute :mutator_methods, Array[Symbol], default: [:update, :delete, :destroy]
+    attribute :serializer, Object, default: nil
 
     def with(attribute_updates = {}, &block)
       return self if attribute_updates.empty?
