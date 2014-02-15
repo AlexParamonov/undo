@@ -2,7 +2,7 @@ module Undo
   module Storage
     class Memory
       def initialize(options = {})
-        @serializer = options.fetch :serializer
+        @serializer = options[:serializer] || Undo::Serializer::Null.new
       end
 
       def put(uuid, object)

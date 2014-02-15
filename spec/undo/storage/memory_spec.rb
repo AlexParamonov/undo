@@ -3,16 +3,18 @@ require "undo/storage/memory"
 
 describe Undo::Storage::Memory do
   subject { described_class }
-  let(:adapter) { subject.new serializer: serializer }
-  let(:serializer) { double :serializer }
-  let(:object) { double :object }
+  let(:adapter) { subject.new }
 
-  it "requires serializer" do
-    expect { described_class.new }.to raise_exception(KeyError)
-    expect { described_class.new serializer: double }.not_to raise_exception
+  it "stores string" do
+    adapter.put "hello", "world"
+    expect(adapter.fetch "hello").to eq "world"
   end
 
   describe "serialization" do
+    let(:adapter) { subject.new serializer: serializer }
+    let(:serializer) { double :serializer }
+    let(:object) { double :object }
+
     it "serializes using #to_memory_object" do
       expect(serializer).to receive(:to_memory_object).with object
       adapter.put 123, object

@@ -10,7 +10,7 @@ module Undo
       require "securerandom"
       ->(object) { SecureRandom.uuid }
     }
-    attribute :serializer, Object, default: ->(config, _) { Undo::Serializer::Null.new }
+    attribute :serializer, Object, default: nil
 
     attribute :storage, Object, default: ->(config, _) {
       require "undo/storage/memory"
