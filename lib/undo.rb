@@ -1,9 +1,8 @@
-require "undo/version"
+require "undo/gemspec"
 require "undo/config"
 
 module Undo
   require "undo/model"
-  require "undo/serializer/null"
 
   def self.configure(&block)
     yield(config) if block_given?
