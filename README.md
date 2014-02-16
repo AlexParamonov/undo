@@ -93,9 +93,9 @@ end
 ### Configuration options
 `storage` option responsible for putting and fetching object state to or from some storage.  
 Implement `put(uuid, object)` and `fetch(uuid)` methods.  
-Currently available serializers:
+Currently available storages:
 * `Undo::Storage::Memory` simple runtime storage (Hash)
-* `gem "undo-storage-redis"` designed to be used with `gem "redis"` from v0.1
+* `gem "undo-storage-redis"` designed to be used with `gem "redis"` from v0.1 to current
 
 See also [documentation](http://github.com/AlexParamonov/undo)
 on project repository for full list of currently available storage adapters.  
