@@ -1,7 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'undo/gemspec'
+require 'undo/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "undo"
@@ -30,10 +30,4 @@ No database required: store data as it suites you.
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", ">= 3.0.0.beta1"
 
-  if Undo::RUNNING_ON_CI
-    spec.add_development_dependency "coveralls"
-  else
-    spec.add_development_dependency "pry"
-    spec.add_development_dependency "pry-plus" if "ruby" == RUBY_ENGINE
-  end
 end
