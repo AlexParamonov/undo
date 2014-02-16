@@ -33,13 +33,26 @@ describe Undo::Model do
     end
 
     describe "stores object data" do
+      let(:object) { double :object, change: true }
+      let(:storage) { double :storage }
+      let(:serializer) { double :serializer }
+
       specify "when called mutator method" do
-        storage = double :storage
-        allow(object).to receive(:change)
         expect(storage).to receive(:put)
 
         model = subject.new object,
                             storage: storage,
+                            mutator_methods: [:change]
+        model.change
+      end
+
+      it "serializes data before storing" do
+        expect(serializer).to receive(:serialize).with(object).ordered
+        expect(storage).to receive(:put).ordered
+
+        model = subject.new object,
+                            storage: storage,
+                            serializer: serializer,
                             mutator_methods: [:change]
         model.change
       end

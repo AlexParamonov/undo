@@ -23,23 +23,22 @@ describe Undo do
       expect(decorator).to be_a Array
     end
 
-    it "restores object" do
-      undoable_model = subject.wrap object
-      undoable_model.change
-      restored_object = subject.restore undoable_model.uuid
+    describe "restores object by uuid" do
+      it "restores object" do
+        model = subject.wrap object
+        model.change
+        restored_object = subject.restore model.uuid
 
-      expect(restored_object).to eq object
-    end
+        expect(restored_object).to eq object
+      end
 
-    describe "with options" do
       it "restores using provided options" do
-        storage = double
-        expect(storage).to receive(:put)
-        expect(storage).to receive(:fetch) { object }
+        serializer = double :serializer
+        expect(serializer).to receive(:deserialize) { object }
 
-        undoable_model = subject.wrap object, storage: storage
-        undoable_model.change
-        restored_object = subject.restore undoable_model.uuid, storage: storage
+        model = subject.wrap object
+        model.change
+        restored_object = subject.restore model.uuid, serializer: serializer
 
         expect(restored_object).to eq object
       end

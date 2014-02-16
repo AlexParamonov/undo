@@ -5,8 +5,7 @@ module Undo
   require "undo/model"
 
   def self.configure(&block)
-    yield(config) if block_given?
-    config
+    block_given? ? block.call(config) : config
   end
 
   def self.config
