@@ -1,5 +1,10 @@
+require "forwardable"
+
 module Undo
   class Model < SimpleDelegator
+    extend Forwardable
+    def_delegators :object, :class, :kind_of?
+
     def initialize(object, options = {})
       @object = object
       @config = config.with options
@@ -23,7 +28,7 @@ module Undo
     end
 
     def store
-      config.storage.put uuid, object
+      config.storage.put uuid, config.serializer.serialize(object)
     end
 
     def config

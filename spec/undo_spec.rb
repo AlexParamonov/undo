@@ -13,12 +13,14 @@ describe Undo do
     end
 
     it "is a decorator" do
-      object = [:a, :b]
+      object = %w[hello world]
+
       decorator = subject.wrap object
       expect(object).to receive(:some_method)
-
       decorator.some_method
-      expect(object.class).to eq Array
+
+      expect(decorator.class).to eq Array
+      expect(decorator).to be_a Array
     end
 
     it "restores object" do
