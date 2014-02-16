@@ -8,8 +8,15 @@ Gem::Specification.new do |spec|
   spec.version       = Undo::VERSION
   spec.authors       = ["Alexander Paramonov"]
   spec.email         = ["alexander.n.paramonov@gmail.com"]
-  spec.summary       = %q{Undo operations on object}
-  spec.description   = %q{Reverts last operation on the object}
+  spec.summary       = %q{Reverts operation made upon object}
+  spec.description   = %q{
+Undo reverts operation made upon object.
+It stores the object state before the mutator operation and allows to restore this state later.
+
+Undo uses adapters for storage (Redis, ActiveRecord, etc) and custom serializers (ActiveRecord, Virtus, etc).
+It is very lightweight solution that can be used as well with heavy ActiveRecord as with simple Hash or Virtus objects.
+No database required: store data as it suites you.
+}
   spec.homepage      = "http://github.com/AlexParamonov/undo"
   spec.license       = "MIT"
 

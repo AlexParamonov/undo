@@ -5,9 +5,15 @@ Undo
 [![Coverage Status](https://coveralls.io/repos/AlexParamonov/undo/badge.png?branch=master)](https://coveralls.io/r/AlexParamonov/undo?branch=master)
 [![Gem Version](https://badge.fury.io/rb/undo.png)](http://badge.fury.io/rb/undo)
 
-Undo last operation on object.  
-Undo gem allows to use custom adapters for storage (Redis,
-ActiveRecord, etc). And custom serializers when need (ActiveRecord, Virtus, etc)
+Undo reverts operation made upon object.  
+It stores the object state before the mutator operation and allows to
+restore this state later.
+
+Undo uses adapters for storage (Redis, ActiveRecord, etc) and custom
+serializers (ActiveRecord, Virtus, etc). It is very lightweight
+solution that can be used as well with heavy ActiveRecord as with
+simple Hash or Virtus objects. No database required: store data as it
+suites you.
 
 Contents
 ---------
