@@ -18,6 +18,8 @@ module Undo
   end
 
   def self.restore(uuid, options = {})
-    config.with(options).storage.fetch uuid
+    config.with(options) do |config|
+      config.serializer.deserialize config.storage.fetch uuid
+    end
   end
 end
