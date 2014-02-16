@@ -1,4 +1,5 @@
 require "spec_helper_lite"
+require "undo/serializer/null"
 
 describe Undo::Serializer::Null do
   subject { described_class }
