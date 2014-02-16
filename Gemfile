@@ -3,9 +3,9 @@ gemspec
 
 group :test do
   if !!ENV['CI']
-    gem "pry"
-  else
-    gem "pry-plus" if "ruby" == RUBY_ENGINE
     gem "coveralls"
+  else
+    gem "pry"
+    gem "pry-plus" if "ruby" == RUBY_ENGINE
   end
 end
