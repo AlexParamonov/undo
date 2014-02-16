@@ -109,6 +109,7 @@ end
 
 Currently available serializers:
 * `Undo::Serializer::Null` pass though serializer. It do nothing and returns whatever passed to it.
+* `gem undo-serializer-active_model`
 
 Check [documentation](http://github.com/AlexParamonov/undo) on project
 repository for currently available serializers.
