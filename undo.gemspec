@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Alexander Paramonov"]
   spec.email         = ["alexander.n.paramonov@gmail.com"]
   spec.summary       = %q{Undo operations on object}
-  spec.description   = %q{Undo allows to reverl last operation on object}
+  spec.description   = %q{Reverts last operation on the object}
   spec.homepage      = "http://github.com/AlexParamonov/undo"
   spec.license       = "MIT"
 
