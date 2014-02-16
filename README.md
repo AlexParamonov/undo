@@ -88,7 +88,7 @@ end
 `storage` option responsible for putting and fetching object state to or from some storage.  
 Implement `put(uuid, object)` and `fetch(uuid)` methods.  
 Currently available serializers:
-* `gem "undo-storage-memory"` simple runtime storage (Hash)
+* `Undo::Storage::Memory` simple runtime storage (Hash)
 * `gem "undo-storage-redis"` designed to be used with `gem "redis"` from v0.1
 
 See also [documentation](http://github.com/AlexParamonov/undo)
@@ -97,53 +97,15 @@ To convert objects to data that can be processed by storage adapters and backwar
 
 ``` ruby
 Undo.configure do |config|
-  config.storage = Undo::Storage::Redis.new(serializer: CustomSerializer.new)
-end
-```
-
-or define global serializer:
-
-``` ruby
-Undo.configure do |config|
   config.serializer = CustomSerializer.new
 end
 ```
-
-And it will be passed to default storage adapters or can be directly used:
-
-``` ruby
-Undo.configure do |config|
-  config.serializer = CustomSerializer.new
-  config.storage = Undo::Storage::Redis.new(serializer: config.serializer)
-end
-```
-
 
 Currently available serializers:
-* `gem "undo-serializer-null"` pass though serializer. It do nothing and returns whatever passed to it. Usually used internally by default in storage adapters
-* `Undo::Serializer::Simple` serializer class converts basic objects (Array, Hash) to/from json
-
-``` ruby
-Undo.configure do |config|
-  config.serializer = Undo::Serializer::Simple.new
-end
-```
+* `Undo::Serializer::Null` pass though serializer. It do nothing and returns whatever passed to it.
 
 Check [documentation](http://github.com/AlexParamonov/undo) on project
 repository for currently available serializers.
-
-Serializer is used in storage adapters to serialize and deserialize data to required format.  
-Storage adapters may use serializer this way:
-
-``` ruby
-json = serializer.to_json object # in put method
-serializer.from_json json # in fetch method
-
-xml = serializer.to_xml object
-serializer.from_xml xml
-```
-So `to_json(object)` and `from_json(json)` methods (or any other `to_*` or `from_*` methods that required by storage adapter) should be implemented
-
 
 `uuid_generator` option allows to setup custom uuid generator.
 
@@ -167,9 +129,9 @@ end
 ```
 
 ### In place configuration
-Any configuration option from previous chapter except `serializer` can
-be applied in place for given operation.
-To restore object from another storage use `storage` option:
+Any configuration option from previous chapter can be applied in
+place for given operation. To restore object from another storage use
+`storage` option:
 
 ``` ruby
 Undo.restore uuid, storage: AnotherStorage.new
@@ -180,6 +142,15 @@ To wrap an object using custom mutator_methods use `mutator_methods` option:
 ``` ruby
 Undo.wrap object, mutator_methods: [:save]
 ```
+
+To use custom serializer or deserializer use `serializer` option:
+
+``` ruby
+Undo.wrap post, serializer: PostSerializer.new(post)
+post.destroy
+Undo.restore uuid, serializer: PostDeserializer.new(options)
+```
+
 
 Contacts
 -------------
@@ -194,8 +165,10 @@ tested with Ruby
 * 2.1
 * 2.0
 * 1.9.3
-* rbx-19mode
 * ruby-head
+* rbx
+* jruby-19mode
+* jruby-head
 
 See [build history](http://travis-ci.org/#!/AlexParamonov/undo/builds)
 
