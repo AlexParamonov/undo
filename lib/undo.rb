@@ -1,4 +1,4 @@
-require "undo/gemspec"
+require "undo/version"
 require "undo/config"
 
 module Undo
