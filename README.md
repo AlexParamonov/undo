@@ -95,6 +95,7 @@ end
 Implement `put(uuid, object)` and `fetch(uuid)` methods.  
 Currently available storages:
 * `Undo::Storage::Memory` simple runtime storage (Hash)
+* `gem "undo-storage-rails_cache"` designed for Rails, but can be used with any ducktype cache store
 * `gem "undo-storage-redis"` designed to be used with `gem "redis"` from v0.1 to current
 
 See also [documentation](http://github.com/AlexParamonov/undo)
