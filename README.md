@@ -75,8 +75,8 @@ path though serializer, configure the Undo:
 
 ``` ruby
 Undo.configure do |config|
-  config.storage = Undo::Storage::RailsCache
-  config.serializer = Undo::Serializer::ActiveModel
+  config.storage = Undo::Storage::RailsCache.new
+  config.serializer = Undo::Serializer::ActiveModel.new
 end
 ```
 gem `undo-storage-rails_cache` and gem `undo-serializer-active_model` are required for this.  
