@@ -71,7 +71,7 @@ state on each hit to `mutator methods`. By default mutator_methods are
 place or using global configuration (see below).
 
 To use something more advanced rather plain memory storage and
-path though serializer, configure the Undo:  
+pass through serializer, configure the Undo:  
 
 ``` ruby
 Undo.configure do |config|
