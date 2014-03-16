@@ -25,5 +25,11 @@ module Undo
 
       block_given? ? block.call(config) : config
     end
+
+    def filter(options)
+      options.delete_if do |key, _|
+        attributes.keys.include? key
+      end
+    end
   end
 end

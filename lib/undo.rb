@@ -10,14 +10,17 @@ module Undo
   def self.store(object, options = {})
     config.with(options) do |config|
       uuid(object, options).tap do |uuid|
-        config.storage.put uuid, config.serializer.serialize(object)
+        config.storage.put uuid,
+                           config.serializer.serialize(object, config.filter(options))
       end
     end
   end
 
   def self.restore(uuid, options = {})
     config.with(options) do |config|
-      config.serializer.deserialize config.storage.fetch(uuid)
+      config.serializer.deserialize config.storage.fetch(uuid),
+                                    config.filter(options)
+
     end
   end
 

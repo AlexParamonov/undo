@@ -176,6 +176,13 @@ post.destroy
 Undo.restore uuid, serializer: PostDeserializer.new(options)
 ```
 
+Additionally when given serializer accepts additional options to
+`#serialize` or `#deserialize`, those options can be set in place as well:
+
+``` ruby
+Undo.store post, include: :comments
+```
+
 
 Contacts
 -------------

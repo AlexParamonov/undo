@@ -21,7 +21,7 @@ describe Undo do
     let(:serializer) { double :serializer }
 
     it "serializes data before storing" do
-      expect(serializer).to receive(:serialize).with(object).ordered
+      expect(serializer).to receive(:serialize).with(object, anything).ordered
       expect(storage).to receive(:put).ordered
 
       subject.store object,
@@ -33,11 +33,28 @@ describe Undo do
       uuid = subject.store object
 
       expect(storage).to receive(:fetch).and_return(foo: :bar).ordered
-      expect(serializer).to receive(:deserialize).with(foo: :bar).ordered
+      expect(serializer).to receive(:deserialize).with({ foo: :bar }, anything).ordered
 
       subject.restore uuid,
         storage: storage,
         serializer: serializer
+    end
+
+    it "pathtrough options to serialize" do
+      expect(serializer).to receive(:serialize).with(object, foo: :bar)
+
+      subject.store object,
+        serializer: serializer,
+        foo: :bar
+    end
+
+    it "pathtrough options to deserialize" do
+      uuid = subject.store object
+      expect(serializer).to receive(:deserialize).with(object, foo: :bar)
+
+      subject.restore uuid,
+        serializer: serializer,
+        foo: :bar
     end
   end
 

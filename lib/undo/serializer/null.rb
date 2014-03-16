@@ -1,11 +1,11 @@
 module Undo
   module Serializer
     class Null
-      def serialize(object)
+      def serialize(object, options = {})
         object
       end
 
-      def deserialize(object)
+      def deserialize(object, options = {})
         object
       end
     end
