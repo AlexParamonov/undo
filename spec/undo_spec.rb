@@ -40,7 +40,7 @@ describe Undo do
         serializer: serializer
     end
 
-    it "pathtrough options to serialize" do
+    it "pathtrough options from store to serialize" do
       expect(serializer).to receive(:serialize).with(object, foo: :bar)
 
       subject.store object,
@@ -48,7 +48,19 @@ describe Undo do
         foo: :bar
     end
 
-    it "pathtrough options to deserialize" do
+    it "pathtrough options from wrap to serialize" do
+      expect(serializer).to receive(:serialize)
+
+      wrapper = subject.wrap object,
+        serializer: serializer,
+        mutator_methods: :change,
+        foo: :bar
+
+      wrapper.change
+    end
+
+
+    it "pathtrough options from restore to deserialize" do
       uuid = subject.store object
       expect(serializer).to receive(:deserialize).with(object, foo: :bar)
 

@@ -25,12 +25,9 @@ module Undo
   end
 
   def self.wrap(object, options = {})
+    options[:uuid] ||= uuid object, options
     config.with(options) do |config|
-      Wrapper.new(
-        object,
-        uuid(object, options),
-        mutator_methods: config.mutator_methods
-      )
+      Wrapper.new object, options.merge(mutator_methods: config.mutator_methods)
     end
   end
 
