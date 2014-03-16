@@ -126,7 +126,7 @@ end
 
 Currently available serializers:
 * `Undo::Serializer::Null` pass though serializer. It do nothing and returns whatever passed to it.
-* `gem undo-serializer-active_model`
+* `gem undo-serializer-active_model` depends on #attributes method so can be used with Virtus and PORO objects as well as with ActiveRecord objects.
 
 Check [documentation](http://github.com/AlexParamonov/undo) on project
 repository for currently available serializers.
