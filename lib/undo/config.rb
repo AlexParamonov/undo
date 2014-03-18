@@ -28,8 +28,12 @@ module Undo
 
     def filter(options)
       options.delete_if do |key, _|
-        attributes.keys.include? key
+        recognized_attributes.include? key.to_sym
       end
+    end
+
+    def recognized_attributes
+      @recognized_attributes ||= attribute_set.map(&:name)
     end
   end
 end
