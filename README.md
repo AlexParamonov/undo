@@ -1,8 +1,9 @@
 Undo
 ==========
 [![Build Status](https://travis-ci.org/AlexParamonov/undo.png?branch=master)](https://travis-ci.org/AlexParamonov/undo)
-[![Gemnasium Build Status](https://gemnasium.com/AlexParamonov/undo.png)](http://gemnasium.com/AlexParamonov/undo)
 [![Coverage Status](https://coveralls.io/repos/AlexParamonov/undo/badge.png?branch=master)](https://coveralls.io/r/AlexParamonov/undo?branch=master)
+[![Code Climate](https://codeclimate.com/github/AlexParamonov/undo.png)](https://codeclimate.com/github/AlexParamonov/undo)
+[![Gemnasium Build Status](https://gemnasium.com/AlexParamonov/undo.png)](http://gemnasium.com/AlexParamonov/undo)
 [![Gem Version](https://badge.fury.io/rb/undo.png)](http://badge.fury.io/rb/undo)
 
 Undo reverts operation made upon object.  
