@@ -9,7 +9,7 @@ module Undo
     def initialize(uuid, object, options = {})
       @uuid = uuid
       @object = object
-      @mutator_methods = options.delete(:mutator_methods) || []
+      @mutator_methods = Kernel.Array(options.delete :mutator_methods)
       @options = options
 
       super object
@@ -21,11 +21,7 @@ module Undo
     end
 
     private
-    attr_reader :object, :options
-
-    def mutator_methods
-      Kernel.Array(@mutator_methods)
-    end
+    attr_reader :object, :options, :mutator_methods
 
     def store
       Undo.store object, options.merge(uuid: uuid)
