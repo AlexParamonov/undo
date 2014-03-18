@@ -1,4 +1,3 @@
-require "undo/version"
 require "undo/config"
 require "undo/wrapper"
 
