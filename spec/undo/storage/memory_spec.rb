@@ -7,7 +7,13 @@ describe Undo::Storage::Memory do
   let(:object) { double :object }
 
   it "stores any object" do
-    adapter.put 123, object
+    adapter.store 123, object
     expect(adapter.fetch 123).to eq object
+  end
+
+  it "deletes stored object" do
+    adapter.store 123, object
+    adapter.delete 123
+    expect { adapter.fetch 123 }.to raise_error(KeyError)
   end
 end

@@ -1,11 +1,10 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'undo/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "undo"
-  spec.version       = Undo::VERSION
+  spec.version       = IO.read("VERSION")
   spec.authors       = ["Alexander Paramonov"]
   spec.email         = ["alexander.n.paramonov@gmail.com"]
   spec.summary       = %q{Reverts operation made upon object}
@@ -26,8 +25,7 @@ No database required: store data as it suites you.
   spec.require_paths = ["lib"]
 
   spec.add_dependency "virtus", "~> 1.0"
-  spec.add_development_dependency "bundler", "~> 1.5"
+  spec.add_development_dependency 'bundler', '~> 1.0'
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", ">= 3.0.0.beta1"
-
 end

@@ -16,8 +16,8 @@ module Undo
     }
     attribute :storage, Object, default: ->(config, _) {
       require "undo/storage/memory"
-      Undo::Storage::Memory.new serializer: config.serializer
-    }, lazy: true
+      Undo::Storage::Memory.new
+    }
 
     def with(attribute_updates = {}, &block)
       config = attribute_updates.empty? ? self
@@ -28,8 +28,12 @@ module Undo
 
     def filter(options)
       options.delete_if do |key, _|
-        attributes.keys.include? key
+        recognized_attributes.include? key.to_sym
       end
+    end
+
+    def recognized_attributes
+      @recognized_attributes ||= attribute_set.map(&:name)
     end
   end
 end
