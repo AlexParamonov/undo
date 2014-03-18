@@ -104,10 +104,12 @@ describe Undo do
       end
 
       specify "using gerenated uuid" do
-        model = subject.wrap object
+        uuid = object.object_id
+        model = subject.wrap object, uuid_generator: -> object { object.object_id }
         model.change
 
-        expect(subject.restore model.uuid).to eq object
+        expect(model.uuid).to eq uuid
+        expect(subject.restore uuid).to eq object
       end
     end
   end

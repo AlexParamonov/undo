@@ -6,15 +6,15 @@ module Undo
 
     attribute :mutator_methods, Array[Symbol], default: [:update, :delete, :destroy]
 
-    attribute :uuid_generator, Proc, default: ->(config, _) {
+    attribute :uuid_generator, Proc, default: -> config, _ {
       require "securerandom"
-      ->(object) { SecureRandom.uuid }
+      -> object { SecureRandom.uuid }
     }
-    attribute :serializer, Object, default: ->(config, _) {
+    attribute :serializer, Object, default: -> config, _ {
       require "undo/serializer/null"
       Undo::Serializer::Null.new
     }
-    attribute :storage, Object, default: ->(config, _) {
+    attribute :storage, Object, default: -> config, _ {
       require "undo/storage/memory"
       Undo::Storage::Memory.new
     }
@@ -34,6 +34,10 @@ module Undo
 
     def recognized_attributes
       @recognized_attributes ||= attribute_set.map(&:name)
+    end
+
+    def build_uuid(object, options = {})
+      options.fetch(:uuid) { uuid_generator.call(object) }
     end
   end
 end

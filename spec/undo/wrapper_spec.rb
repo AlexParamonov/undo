@@ -1,31 +1,29 @@
 require "spec_helper_lite"
 
 describe Undo::Wrapper do
-  subject { described_class }
-  let(:model) { subject.new object, uuid: uuid, mutator_methods: mutator_methods }
-  let(:mutator_methods) { [:change] }
-  let(:object) { double :object, change: true }
+  subject do
+    described_class.new(
+      uuid,
+      object,
+      mutator_methods: :change
+    )
+  end
+
+  let(:object) { double :object, change: "changed" }
   let(:uuid) { double :uuid }
 
-  describe "storage" do
-    it "stores object when mutator method is called" do
-      expect(model).to receive(:store)
-      model.change
+  describe "when mutator method called" do
+    it "stores the object under given uuid" do
+      expect(Undo).to receive(:store).with(object, uuid: uuid)
+      subject.change
+    end
+
+    it "calls the method and returns result" do
+      expect(subject.change).to eq "changed"
     end
   end
 
-  describe "#uuid" do
-    it "uses provided uuid" do
-      expect(model.uuid).to eq uuid
-    end
-
-    describe "when object respond_to uuid" do
-      it "uses object#uuid instead" do
-        expect(object).to receive(:uuid) { "123" }
-        expect(model.uuid).to eq "123"
-        expect(Undo).to receive(:store).with(object,  hash_including(uuid: "123"))
-        model.change
-      end
-    end
+  it "returns provided uuid" do
+    expect(subject.uuid).to eq uuid
   end
 end
