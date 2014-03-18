@@ -113,8 +113,11 @@ Undo.restore "uniq identifier"
 
 ### Configuration options
 
-`storage` option responsible for putting and fetching object state to or from some storage.  
-Implement `put(uuid, object)`, `fetch(uuid)` and optionally `delete(uuid)` methods.  
+`storage` option responsible for storing and fetching object state to or from some storage.
+
+Implement `store(uuid, object)`, `fetch(uuid)` and optionally `delete(uuid)` 
+methods (ruby `Hash` interface).
+
 Currently available storages:
 * `Undo::Storage::Memory` simple runtime storage (Hash)
 * `gem "undo-storage-rails_cache"` designed for Rails, but can be used with any ducktype cache store
@@ -149,7 +152,7 @@ Undo.configure do |config|
 end
 ```
 
-`mutator methods` option defines a list of methods that will trigger storage#put
+`mutator methods` option defines a list of methods that will trigger storing the object state
 By default mutator_methods are `update`, `delete`, `destroy`.  
 To append custom mutator_methods use  
 

@@ -16,8 +16,8 @@ module Undo
     }
     attribute :storage, Object, default: ->(config, _) {
       require "undo/storage/memory"
-      Undo::Storage::Memory.new serializer: config.serializer
-    }, lazy: true
+      Undo::Storage::Memory.new
+    }
 
     def with(attribute_updates = {}, &block)
       config = attribute_updates.empty? ? self

@@ -28,7 +28,7 @@ describe Undo do
 
     it "serializes data before storing" do
       expect(serializer).to receive(:serialize).with(object, anything).ordered
-      expect(storage).to receive(:put).ordered
+      expect(storage).to receive(:store).ordered
 
       subject.store object,
         storage: storage,
