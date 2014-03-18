@@ -5,11 +5,15 @@ module Undo
       end
 
       def put(uuid, object)
-        storage[uuid] = object
+        storage.store uuid, object
       end
 
       def fetch(uuid)
-        storage.fetch(uuid)
+        storage.fetch uuid
+      end
+
+      def delete(uuid)
+        storage.delete uuid
       end
 
       private

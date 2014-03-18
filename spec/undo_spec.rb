@@ -16,6 +16,12 @@ describe Undo do
     expect(subject.restore uuid).to eq object
   end
 
+  it "deletes stored object" do
+    uuid = subject.store object
+    subject.delete uuid
+    expect { subject.restore uuid }.to raise_error(KeyError)
+  end
+
   describe "serializing" do
     let(:storage) { double :storage }
     let(:serializer) { double :serializer }

@@ -24,6 +24,12 @@ module Undo
     end
   end
 
+  def self.delete(uuid, options = {})
+    config.with(options) do |config|
+      config.storage.delete(uuid)
+    end
+  end
+
   def self.wrap(object, options = {})
     options[:uuid] ||= uuid object, options
     config.with(options) do |config|
