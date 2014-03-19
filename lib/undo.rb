@@ -9,22 +9,27 @@ module Undo
   def self.store(object, options = {})
     config.with(options) do |config|
       config.build_uuid(object, options).tap do |uuid|
-        config.storage.store uuid,
-                             config.serializer.serialize(object, config.filter(options))
+        config.storage.store(
+          uuid,
+          config.serializer.serialize(object, config.filter(options)),
+          config.filter(options)
+        )
       end
     end
   end
 
   def self.restore(uuid, options = {})
     config.with(options) do |config|
-      config.serializer.deserialize config.storage.fetch(uuid),
-                                    config.filter(options)
+      config.serializer.deserialize(
+        config.storage.fetch(uuid, config.filter(options)),
+        config.filter(options)
+      )
     end
   end
 
   def self.delete(uuid, options = {})
     config.with(options) do |config|
-      config.storage.delete(uuid)
+      config.storage.delete uuid, config.filter(options)
     end
   end
 

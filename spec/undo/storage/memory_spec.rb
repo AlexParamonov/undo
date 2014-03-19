@@ -14,4 +14,13 @@ describe Undo::Storage::Memory do
     subject.delete 123
     expect { subject.fetch 123 }.to raise_error(KeyError)
   end
+
+  it "accepts options" do
+    options = { foo: :bar }
+    expect do
+      subject.store 123, object, options
+      subject.fetch 123, options
+      subject.delete 123, options
+    end.not_to raise_error
+  end
 end

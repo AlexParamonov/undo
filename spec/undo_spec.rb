@@ -22,9 +22,9 @@ describe Undo do
     expect { subject.restore uuid }.to raise_error(KeyError)
   end
 
-  describe "serializing" do
-    let(:storage) { double :storage }
+  describe "serialization" do
     let(:serializer) { double :serializer }
+    let(:storage) { double :storage }
 
     it "serializes data before storing" do
       expect(serializer).to receive(:serialize).with(object, anything).ordered
@@ -36,17 +36,19 @@ describe Undo do
     end
 
     it "deserializes data before restoring" do
-      uuid = subject.store object
+      expect(storage).to receive(:fetch).and_return(object).ordered
+      expect(serializer).to receive(:deserialize).with(object, anything).ordered
 
-      expect(storage).to receive(:fetch).and_return(foo: :bar).ordered
-      expect(serializer).to receive(:deserialize).with({ foo: :bar }, anything).ordered
-
-      subject.restore uuid,
+      subject.restore "uuid",
         storage: storage,
         serializer: serializer
     end
+  end
 
-    it "pass through options from store to serialize" do
+  describe "pass through options to serializer" do
+    let(:serializer) { double :serializer }
+
+    specify "from #store" do
       expect(serializer).to receive(:serialize).with(object, foo: :bar)
 
       subject.store object,
@@ -54,8 +56,8 @@ describe Undo do
         foo: :bar
     end
 
-    it "pass through options from wrap to serialize" do
-      expect(serializer).to receive(:serialize)
+    specify "from #wrap" do
+      expect(serializer).to receive(:serialize).with(object, foo: :bar)
 
       wrapper = subject.wrap object,
         serializer: serializer,
@@ -65,13 +67,43 @@ describe Undo do
       wrapper.change
     end
 
-
-    it "pass through options from restore to deserialize" do
+    specify "from #restore" do
       uuid = subject.store object
       expect(serializer).to receive(:deserialize).with(object, foo: :bar)
 
       subject.restore uuid,
         serializer: serializer,
+        foo: :bar
+    end
+  end
+
+  describe "pass through options to storage" do
+    let(:storage) { double :storage }
+
+    specify "from #store" do
+      expect(storage).to receive(:store).with(anything, object, foo: :bar)
+
+      subject.store object,
+        storage: storage,
+        foo: :bar
+    end
+
+    specify "from #wrap" do
+      expect(storage).to receive(:store).with(anything, object, foo: :bar)
+
+      wrapper = subject.wrap object,
+        storage: storage,
+        mutator_methods: :change,
+        foo: :bar
+
+      wrapper.change
+    end
+
+    specify "from #restore" do
+      expect(storage).to receive(:fetch).with("uuid", foo: :bar)
+
+      subject.restore "uuid",
+        storage: storage,
         foo: :bar
     end
   end
