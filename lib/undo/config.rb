@@ -28,16 +28,22 @@ module Undo
 
     def filter(options)
       options.delete_if do |key, _|
-        recognized_attributes.include? key.to_sym
+        (public_attributes + private_attributes).include? key.to_sym
       end
     end
 
-    def recognized_attributes
-      @recognized_attributes ||= attribute_set.map(&:name)
+    def public_attributes
+      @public_attributes ||= attribute_set.map(&:name)
     end
 
     def build_uuid(object, options = {})
       options[:uuid] || uuid_generator.call(object)
     end
+
+    private
+    def private_attributes
+      [:uuid]
+    end
+
   end
 end

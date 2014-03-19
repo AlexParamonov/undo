@@ -2,15 +2,20 @@ require "spec_helper_lite"
 
 describe Undo::Config do
   describe "#filter" do
-    it "removes all recognized attributes from input hash" do
-      allow(subject).to receive(:recognized_attributes) { [:known] }
+    it "removes public attributes" do
+      allow(subject).to receive(:public_attributes) { [:known] }
+      expect(subject.filter known: true, unknown: true).to eq unknown: true
+    end
+
+    it "removes private attributes" do
+      allow(subject).to receive(:private_attributes) { [:known] }
       expect(subject.filter known: true, unknown: true).to eq unknown: true
     end
   end
 
-  describe "#recognized_attributes" do
-    it "includes all attribute names" do
-      expect(subject.recognized_attributes).to match_array(subject.attributes.keys)
+  describe "#public_attributes" do
+    it "includes all attributes" do
+      expect(subject.public_attributes).to match_array(subject.attributes.keys)
     end
   end
 end
