@@ -37,7 +37,7 @@ module Undo
     end
 
     def build_uuid(object, options = {})
-      options.fetch(:uuid) { uuid_generator.call(object) }
+      options[:uuid] || uuid_generator.call(object)
     end
   end
 end

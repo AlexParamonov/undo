@@ -79,7 +79,7 @@ describe Undo do
   describe "#wrap" do
     before do
       subject.configure do |config|
-        config.mutator_methods = [:change]
+        config.mutator_methods = :change
       end
     end
 

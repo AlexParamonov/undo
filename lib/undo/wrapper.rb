@@ -6,11 +6,12 @@ module Undo
     def_delegators :object, :class, :kind_of?
     attr_reader :uuid
 
-    def initialize(uuid, object, options = {})
-      @uuid = uuid
+    def initialize(object, uuid, options = {})
       @object = object
-      @mutator_methods = Kernel.Array(options.delete :mutator_methods)
+      @uuid = uuid
       @options = options
+
+      @mutator_methods = options.delete :mutator_methods
 
       super object
     end

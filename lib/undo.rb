@@ -31,7 +31,7 @@ module Undo
   def self.wrap(object, options = {})
     config.with(options) do |config|
       uuid = config.build_uuid(object, options)
-      Wrapper.new uuid, object, config.attributes.merge(options)
+      Wrapper.new object, uuid, options.merge(config.attributes)
     end
   end
 

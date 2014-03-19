@@ -3,9 +3,9 @@ require "spec_helper_lite"
 describe Undo::Wrapper do
   subject do
     described_class.new(
-      uuid,
       object,
-      mutator_methods: :change
+      uuid,
+      mutator_methods: [:change]
     )
   end
 
