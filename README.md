@@ -104,14 +104,6 @@ Undo.store object, uuid: uuid
 Undo.restore uuid
 ```
 
-If object respond to #uuid method then it value will be used instead:
-
-``` ruby
-object = OpenStruct.new uuid: "uniq identifier"
-Undo.store object # => uniq identifier
-Undo.restore "uniq identifier"
-```
-
 ### Configuration options
 
 `storage` option responsible for storing and fetching object state to or from some storage.
