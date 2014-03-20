@@ -4,7 +4,7 @@ module Undo
   class Config
     include Virtus.model
 
-    attribute :mutator_methods, Array[Symbol], default: [:update, :delete, :destroy]
+    attribute :mutation_methods, Array[Symbol], default: [:update, :delete, :destroy]
 
     attribute :uuid_generator, Proc, default: -> config, _ {
       require "securerandom"

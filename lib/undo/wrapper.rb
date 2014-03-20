@@ -11,18 +11,18 @@ module Undo
       @uuid = uuid
       @options = options
 
-      @mutator_methods = options.delete :mutator_methods
+      @mutation_methods = options.delete :mutation_methods
 
       super object
     end
 
     def method_missing(method, *args, &block)
-      store if mutator_methods.include? method
+      store if mutation_methods.include? method
       super method, *args, &block
     end
 
     private
-    attr_reader :object, :options, :mutator_methods
+    attr_reader :object, :options, :mutation_methods
 
     def store
       Undo.store object, options.merge(uuid: uuid)

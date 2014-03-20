@@ -5,14 +5,14 @@ describe Undo::Wrapper do
     described_class.new(
       object,
       uuid,
-      mutator_methods: [:change]
+      mutation_methods: [:change]
     )
   end
 
   let(:object) { double :object, change: "changed" }
   let(:uuid) { double :uuid }
 
-  describe "when mutator method called" do
+  describe "when mutation method is called" do
     it "stores the object under given uuid" do
       expect(Undo).to receive(:store).with(object, uuid: uuid)
       subject.change

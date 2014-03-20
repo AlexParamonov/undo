@@ -61,7 +61,7 @@ describe Undo do
 
       wrapper = subject.wrap object,
         serializer: serializer,
-        mutator_methods: :change,
+        mutation_methods: :change,
         foo: :bar
 
       wrapper.change
@@ -93,7 +93,7 @@ describe Undo do
 
       wrapper = subject.wrap object,
         storage: storage,
-        mutator_methods: :change,
+        mutation_methods: :change,
         foo: :bar
 
       wrapper.change
@@ -111,7 +111,7 @@ describe Undo do
   describe "#wrap" do
     before do
       subject.configure do |config|
-        config.mutator_methods = :change
+        config.mutation_methods = :change
       end
     end
 
