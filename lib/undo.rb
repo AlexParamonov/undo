@@ -31,7 +31,7 @@ module Undo
   def self.memory(options)
     Memory.new(
       config.with(options),
-      options
+      config.filter(options)
     )
   end
 
