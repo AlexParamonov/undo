@@ -20,7 +20,7 @@ module Undo
   end
 
   def self.wrap(object, options = {})
-    Wrapper.new object, memory(options), options
+    Wrapper.new object, options
   end
 
   private
@@ -31,7 +31,7 @@ module Undo
   def self.memory(options)
     Memory.new(
       config.with(options),
-      config.filter(options)
+      options
     )
   end
 

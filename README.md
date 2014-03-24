@@ -187,15 +187,17 @@ By default it is using `SecureRandom.uuid`.
 
 Option is used by `Undo.wrap` only.
 
-`mutation_methods` defines a list of methods which may mutate object state.
+`store_on` defines a list of methods which may mutate object state.
 For each hit to such methods `Undo.store` will be called.
 
-By default `mutation_methods` are `update`, `delete`, `destroy`. To
-append custom `mutation_methods` use:
+By default `store_on` are `update`, `delete`, `destroy`. To
+append custom `store_on` use:
 
     Undo.configure do |config|
-      config.mutation_methods += [:put, :push, :pop]
+      config.store_on += [:put, :push, :pop]
     end
+
+    Undo.wrap object, store_on: [:delete, :destroy]
 
 ### In place configuration
 

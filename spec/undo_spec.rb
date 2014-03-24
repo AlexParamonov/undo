@@ -61,7 +61,7 @@ describe Undo do
 
       wrapper = subject.wrap object,
         serializer: serializer,
-        mutation_methods: :change,
+        store_on: [:change],
         foo: :bar
 
       wrapper.change
@@ -93,7 +93,7 @@ describe Undo do
 
       wrapper = subject.wrap object,
         storage: storage,
-        mutation_methods: :change,
+        store_on: [:change],
         foo: :bar
 
       wrapper.change
@@ -110,8 +110,8 @@ describe Undo do
 
   describe "#wrap" do
     before do
-      subject.configure do |config|
-        config.mutation_methods = :change
+      subject::Wrapper.configure do |config|
+        config.store_on = [:change]
       end
     end
 
@@ -140,7 +140,7 @@ describe Undo do
         model = subject.wrap object, uuid_generator: -> object { object.object_id }
         model.change
 
-        expect(model.uuid).to eq uuid
+        expect(model.undo_uuid).to eq uuid
         expect(subject.restore uuid).to eq object
       end
     end
