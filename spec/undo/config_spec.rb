@@ -6,11 +6,6 @@ describe Undo::Config do
       allow(subject).to receive(:public_attributes) { [:known] }
       expect(subject.filter known: true, unknown: true).to eq unknown: true
     end
-
-    it "removes private attributes" do
-      allow(subject).to receive(:private_attributes) { [:known] }
-      expect(subject.filter known: true, unknown: true).to eq unknown: true
-    end
   end
 
   describe "#public_attributes" do

@@ -4,14 +4,13 @@ module Undo
   class Wrapper < SimpleDelegator
     extend Forwardable
     def_delegators :object, :class, :kind_of?
-    attr_reader :uuid
+    attr_reader :undo_uuid
 
-    def initialize(object, uuid, options = {})
+    def initialize(object, memory, options = {})
       @object = object
-      @uuid = uuid
-      @options = options
+      @memory = memory
 
-      @mutation_methods = options.delete :mutation_methods
+      @mutation_methods = options.fetch :mutation_methods
 
       super object
     end
@@ -25,7 +24,7 @@ module Undo
     attr_reader :object, :options, :mutation_methods
 
     def store
-      Undo.store object, options.merge(uuid: uuid)
+      @undo_uuid = memory.write object
     end
   end
 end

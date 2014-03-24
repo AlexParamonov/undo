@@ -1,5 +1,6 @@
 require "undo/config"
 require "undo/wrapper"
+require "undo/memory"
 
 module Undo
   def self.configure(&block)
@@ -7,42 +8,31 @@ module Undo
   end
 
   def self.store(object, options = {})
-    config.with(options) do |config|
-      config.build_uuid(object, options).tap do |uuid|
-        config.storage.store(
-          uuid,
-          config.serializer.serialize(object, config.filter(options)),
-          config.filter(options)
-        )
-      end
-    end
+    memory(options).write object
   end
 
   def self.restore(uuid, options = {})
-    config.with(options) do |config|
-      config.serializer.deserialize(
-        config.storage.fetch(uuid, config.filter(options)),
-        config.filter(options)
-      )
-    end
+    memory(options).read uuid
   end
 
   def self.delete(uuid, options = {})
-    config.with(options) do |config|
-      config.storage.delete uuid, config.filter(options)
-    end
+    memory(options).delete uuid
   end
 
   def self.wrap(object, options = {})
-    config.with(options) do |config|
-      uuid = config.build_uuid(object, options)
-      Wrapper.new object, uuid, options.merge(config.attributes)
-    end
+    Wrapper.new object, memory(options), options
   end
 
   private
   def self.config
     @config ||= Undo::Config.new
+  end
+
+  def self.memory(options)
+    Memory.new(
+      config.with(options),
+      config.filter(options)
+    )
   end
 
   private_class_method :config
