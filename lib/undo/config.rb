@@ -27,7 +27,7 @@ module Undo
     end
 
     def filter(options)
-      options.delete_if do |key, _|
+      options.reject do |key, _|
         (public_attributes + private_attributes).include? key.to_sym
       end
     end
