@@ -3,8 +3,8 @@ require "undo/wrapper"
 require "undo/memory"
 
 module Undo
-  def self.configure(&block)
-    block_given? ? block.call(config) : config
+  def self.configure
+    yield config
   end
 
   def self.store(object, options = {})
