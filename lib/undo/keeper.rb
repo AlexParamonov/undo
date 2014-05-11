@@ -1,7 +1,7 @@
 require "forwardable"
 
 module Undo
-  class Memory
+  class Keeper
     extend Forwardable
 
     def initialize(config, options)
@@ -9,14 +9,16 @@ module Undo
       @options = options
     end
 
-    def write(object)
+    def store(object)
       build_uuid(object).tap do |uuid|
-        storage.store uuid, serializer.serialize(object, options), options
+        reflection = serializer.serialize(object, options)
+        storage.store uuid, reflection, options
       end
     end
 
-    def read(uuid)
-      serializer.deserialize storage.fetch(uuid, options), options
+    def restore(uuid)
+      reflection = storage.fetch uuid, options
+      serializer.deserialize reflection, options
     end
 
     def delete(uuid)

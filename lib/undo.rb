@@ -1,6 +1,6 @@
 require "undo/config"
 require "undo/wrapper"
-require "undo/memory"
+require "undo/keeper"
 
 module Undo
   def self.configure
@@ -8,15 +8,15 @@ module Undo
   end
 
   def self.store(object, options = {})
-    memory(options).write object
+    keeper(options).store object
   end
 
   def self.restore(uuid, options = {})
-    memory(options).read uuid
+    keeper(options).restore uuid
   end
 
   def self.delete(uuid, options = {})
-    memory(options).delete uuid
+    keeper(options).delete uuid
   end
 
   def self.wrap(object, options = {})
@@ -28,8 +28,8 @@ module Undo
     @config ||= Undo::Config.new
   end
 
-  def self.memory(options)
-    Memory.new(
+  def self.keeper(options)
+    Keeper.new(
       config.with(options),
       config.filter(options)
     )
