@@ -20,7 +20,7 @@ module Undo
       end
 
       def unpack(data)
-        container.unpack object
+        container.unpack data
       end
 
       def adapter_options(local_options)
