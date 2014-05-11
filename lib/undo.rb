@@ -25,10 +25,7 @@ module Undo
   end
 
   def self.keeper(options)
-    Keeper.new(
-      config.with(options),
-      config.filter(options)
-    )
+    Keeper.new(config, options)
   end
 
   private_class_method :config, :keeper

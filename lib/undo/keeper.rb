@@ -5,8 +5,8 @@ module Undo
     extend Forwardable
 
     def initialize(config, options)
-      @config = config
-      @options = options
+      @config = config.with options
+      @options = config.filter options
     end
 
     def store(object)
