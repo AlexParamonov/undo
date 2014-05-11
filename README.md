@@ -30,6 +30,7 @@ Contents
     1. Configuration options
     1. In place configuration
     1. Pass through options
+    1. Utils
 1. Contacts
 1. Compatibility
 1. Contributing
@@ -199,6 +200,11 @@ option, will be bypass to the serializer and storage adapter:
 
 Same applies for `#restore` and `#delete` methods.
 
+### Utils
+
+* [`Undo::Container::Json`](https://github.com/AlexParamonov/undo/blob/master/lib/undo/container/json.rb) used to pack and unpack hashes in storages
+* [`Undo::Storage::Adapter`](https://github.com/AlexParamonov/undo/blob/master/lib/undo/storage/adapter.rb) abstract storage adapter that provides pack and unpack methods
+* [Shared integration test](https://github.com/AlexParamonov/undo/blob/master/lib/undo/integration/shared_undo_integration_examples.rb) can be used in storage or serializers to verify integrity with Undo gem versions
 
 Contacts
 -------------
