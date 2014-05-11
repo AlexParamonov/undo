@@ -134,7 +134,7 @@ Currently available storage adapters:
 
 * [`Undo::Storage::Memory`](https://github.com/AlexParamonov/undo/blob/master/lib/undo/storage/memory.rb) is a simple runtime storage (ruby Hash object).
 * [`gem "undo-storage-rails_cache"`](https://github.com/AlexParamonov/undo-storage-rails_cache) designed for Rails cache, but can be used with any similarly quaking cache store. Rails constant may not even be defined.
-* [`gem "undo-storage-redis"`](https://github.com/AlexParamonov/undo-storage-redis) designed to be used with `gem "redis"` from v0.1 to current.
+* [`gem "undo-storage-redis"`](https://github.com/AlexParamonov/undo-storage-redis) designed to be used with `gem "redis"`
 
 Check the [documentation on Github](http://github.com/AlexParamonov/undo/README.md)
 for current list of available storage adapters.
@@ -155,6 +155,7 @@ Currently available serializers:
 
 * [`Undo::Serializer::Null`](https://github.com/AlexParamonov/undo/blob/master/lib/undo/serializer/null.rb) passes through object without any convertions. It do nothing and returns whatever passed to it.
 * [`gem undo-serializer-active_model`](https://github.com/AlexParamonov/undo-serializer-active_model) allows to serialize the ActiveRecord models as well as POROs (with implemented #attributes method).
+* [`gem undo-serializer-primitive`](https://github.com/AlexParamonov/undo-serializer-primitive) serializes primitive values. Is used by active_model serializer
 
 Check the [documentation on Github](http://github.com/AlexParamonov/undo/README.md)
 for current list of available serializers.
