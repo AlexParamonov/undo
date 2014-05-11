@@ -11,7 +11,7 @@ module Undo
 
     def store(object)
       build_uuid(object).tap do |uuid|
-        reflection = serializer.serialize(object, options)
+        reflection = serializer.serialize object, options
         storage.store uuid, reflection, options
       end
     end

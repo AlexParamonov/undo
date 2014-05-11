@@ -17,8 +17,6 @@ module Undo
       end
 
       private
-      attr_writer :storage
-
       def storage
         @storage ||= {}
       end

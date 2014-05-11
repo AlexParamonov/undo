@@ -21,7 +21,7 @@ module Undo
 
   private
   def self.config
-    @config ||= Undo::Config.new
+    @config ||= Config.new
   end
 
   def self.keeper(options)
