@@ -1,5 +1,5 @@
 require "spec_helper_lite"
-require_relative "../integration/shared_undo_integration_examples"
+require "undo/integration/shared_undo_integration_examples"
 
 describe Undo do
   let(:object) { double :object, change: true }
