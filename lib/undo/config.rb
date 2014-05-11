@@ -1,38 +1,28 @@
 require "virtus"
+require "undo/serializer/null"
+require "undo/storage/memory"
+require "securerandom"
 
 module Undo
   class Config
     include Virtus.model
 
-    attribute :uuid_generator, Proc, default: -> config, _ {
-      require "securerandom"
-      -> object { SecureRandom.uuid }
-    }
-    attribute :serializer, Object, default: -> config, _ {
-      require "undo/serializer/null"
-      Undo::Serializer::Null.new
-    }
-    attribute :storage, Object, default: -> config, _ {
-      require "undo/storage/memory"
-      Undo::Storage::Memory.new
-    }
+    attribute :serializer,      Object,  default: Undo::Serializer::Null.new
+    attribute :storage,         Object,  default: Undo::Storage::Memory.new
+    attribute :uuid_generator,  Proc,    default: :default_uuid_generator
 
-    def with(attribute_updates = {}, &block)
-      config = attribute_updates.empty? ? self
-                                        : self.class.new(attribute_set.get(self).merge attribute_updates)
-
-      block_given? ? block.call(config) : config
+    def with(attribute_updates = {})
+      self.class.new attributes.merge attribute_updates
     end
 
     def filter(options)
-      options.reject do |key, _|
-        public_attributes.include? key.to_sym
-      end
+      attribute_names = attribute_set.map(&:name)
+      options.reject { |key, _| attribute_names.include? key.to_sym }
     end
 
-    def public_attributes
-      @public_attributes ||= attribute_set.map(&:name)
+    private
+    def default_uuid_generator
+      -> object { SecureRandom.uuid }
     end
-
   end
 end
