@@ -73,17 +73,6 @@ Usage
 
 That is basically it :)
 
-Additionally it is possible to wrap object in decorator:
-
-    decorated_object = Undo.wrap object
-    decorated_object.destroy
-    Undo.restore decorated_object.uuid
-
-decorated_object is a pure decorator, so it quacks like original
-object. The Undo will store object state on each hit to `mutation
-methods` such as `update`, `delete`, `destroy`. Those methods can be
-changed either in place or using global configuration (see below).
-
 To use something more advanced than plain memory storage and
 pass through serializer, configure the Undo:
 
@@ -183,22 +172,6 @@ this case compatible storage adapter should be used.
 
 By default it is using `SecureRandom.uuid`.
 
-#### Mutation methods
-
-Option is used by `Undo.wrap` only.
-
-`store_on` defines a list of methods which may mutate object state.
-For each hit to such methods `Undo.store` will be called.
-
-By default `store_on` are `update`, `delete`, `destroy`. To
-append custom `store_on` use:
-
-    Undo.configure do |config|
-      config.store_on += [:put, :push, :pop]
-    end
-
-    Undo.wrap object, store_on: [:delete, :destroy]
-
 ### In place configuration
 
 Any configuration option from previous chapter can be applied in place
@@ -209,15 +182,9 @@ option may be used in place:
 
     Undo.restore uuid, storage: AnotherStorage.new
 
-To wrap an object using custom mutation_methods:
-
-    Undo.wrap object, mutation_methods: :save
-    Undo.wrap another_object, mutation_methods: [:push, :pull]
-
 To use custom serializer or deserializer use `serializer` option:
 
-    Undo.wrap post, serializer: PostSerializer.new(post)
-    post.destroy
+    Undo.store post, serializer: PostSerializer.new(post)
     Undo.restore uuid, serializer: PostDeserializer.new(options)
 
 and so on.
@@ -229,7 +196,7 @@ option, will be bypass to the serializer and storage adapter:
 
     Undo.store post, include: :comments, expires_in: 1.hour
 
-Same applies for `#restore`, `#wrap` and `#delete` methods.
+Same applies for `#restore` and `#delete` methods.
 
 
 Contacts

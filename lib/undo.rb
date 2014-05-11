@@ -1,5 +1,4 @@
 require "undo/config"
-require "undo/wrapper"
 require "undo/keeper"
 
 module Undo
@@ -17,10 +16,6 @@ module Undo
 
   def self.delete(uuid, options = {})
     keeper(options).delete uuid
-  end
-
-  def self.wrap(object, options = {})
-    Wrapper.new object, options
   end
 
   private
