@@ -1,25 +1,17 @@
 require "spec_helper_lite"
+require_relative "../integration/shared_undo_integration_examples"
 
 describe Undo do
   let(:object) { double :object, change: true }
   subject { described_class }
 
-  it "stores and restores object" do
-    uuid = subject.store object
-    expect(subject.restore uuid).to eq object
-  end
+  include_examples "undo integration"
 
   it "stores and restores object using provided uuid" do
     uuid = "uniq_identifier"
     subject.store object, uuid: uuid
 
     expect(subject.restore uuid).to eq object
-  end
-
-  it "deletes stored object" do
-    uuid = subject.store object
-    subject.delete uuid
-    expect { subject.restore uuid }.to raise_error(KeyError)
   end
 
   describe "serialization" do
