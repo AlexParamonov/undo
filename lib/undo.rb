@@ -31,5 +31,5 @@ module Undo
     )
   end
 
-  private_class_method :config
+  private_class_method :config, :keeper
 end
